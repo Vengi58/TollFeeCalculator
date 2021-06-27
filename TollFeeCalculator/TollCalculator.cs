@@ -15,11 +15,6 @@ public class TollCalculator
         repository = tollRepository;
     }
 
-    private bool WithinAnHour(DateTime start, DateTime end)
-    {
-        return end.Subtract(start) <= TimeSpan.FromMinutes(60);
-    }
-
     public int GetTollFee(DateTime[] dates, Vehicle vehicle)
     {
         if (IsTollFreeDate(dates[0]) || IsTollFreeVehicle(vehicle)) return 0;
@@ -33,7 +28,11 @@ public class TollCalculator
 
         return Math.Min(60, firstHourFee + overAnHourFees);
     }
-    
+    private bool WithinAnHour(DateTime start, DateTime end)
+    {
+        return end.Subtract(start) <= TimeSpan.FromMinutes(60);
+    }
+
     private int GetTollFee(DateTime date)
     {
         return repository.GetFeeForDate(date);
