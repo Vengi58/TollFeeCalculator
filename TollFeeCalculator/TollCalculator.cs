@@ -46,7 +46,8 @@ public class TollCalculator
 
     private bool IsTollFreeDate(DateTime date)
     {
-        return repository.GetTollFreeMonths().Contains(date.Month) ||
+        return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday ||
+            repository.GetTollFreeMonths().Contains(date.Month) ||
             repository.GetTollFreeDatesForYear(date.Year).Any(d => d.Year == date.Year && d.Month == date.Month && d.Day == date.Day);
     }
 }
